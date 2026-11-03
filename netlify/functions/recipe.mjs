@@ -54,19 +54,6 @@ function json(data, status = 200) {
   });
 }
 
-// Some models "think out loud" inside <think>...</think> before answering.
-// Remove that part so only the answer is left.
-function cleanReasoningOutput(text) {
-  if (typeof text !== "string") return null;
-
-  const cleaned = text.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
-
-  // Opening tag with no closing tag = response got cut off mid-reasoning
-  if (/<think>/i.test(cleaned)) return null;
-
-  return cleaned || null;
-}
-
 const toStringList = (value) =>
   Array.isArray(value)
     ? value.filter((item) => typeof item === "string" && item.trim()).map((item) => item.trim())
@@ -200,8 +187,9 @@ export default async function handler(req) {
     }
 
     const data = await response.json();
-    const answer = cleanReasoningOutput(data.choices?.[0]?.message?.content);
-    const recipe = answer && parseRecipe(answer);
+    // Groq returns the model's "thinking" in a separate field, so `content` is just the JSON.
+    const answer = data.choices?.[0]?.message?.content;
+    const recipe = typeof answer === "string" && parseRecipe(answer);
     if (!recipe) {
       return json({ error: "The recipe came back incomplete. Try again." }, 502);
     }

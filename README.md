@@ -1,17 +1,19 @@
 # Newtz Chef: Food Recipe
 
-An AI cooking assistant built with React. Tell it what's in your kitchen, or just describe the meal you want, and it writes a short, step-by-step recipe in the style of the region you pick (Nigeria, Africa, or Europe/UK).
+An AI cooking assistant built with React. Tell it what's in your kitchen, or just describe the meal you want, and it writes a short, step-by-step recipe in the style of the region you pick (Nigeria, West Africa, East Africa, or Europe/UK).
 
-**Live demo:** _add your Netlify link here_
+**Live demo:** [newtz-chef.netlify.app](https://newtz-chef.netlify.app)
 
-<!-- Add a screenshot after deploying: save it as screenshot.png in the project folder, then remove the comment marks below -->
-<!-- ![Newtz Chef screenshot](screenshot.png) -->
+![A Chicken Plantain Stew recipe card in Newtz Chef](screenshot.png)
 
 ## Features
 
-- **Cook from what you have:** add 4 or more ingredients and get the meal that best matches them, plus a list of anything missing.
+- **Cook from what you have:** add 4 or more ingredients (or tap the quick-add chips) and get the meal that best matches them, with a match % and a list of anything missing.
 - **Describe a meal:** type something like "jollof rice" and get the ingredients and steps.
-- **Regional recipes:** choose Nigeria, Africa, or Europe/UK.
+- **Regional recipes:** choose Nigeria, West Africa, East Africa, or Europe/UK.
+- **Recipe card:** tick off steps as you cook, copy or share the recipe, ask for another idea, or watch cooking videos on YouTube.
+- **Saved recipes:** heart a recipe to keep it (stored in your browser).
+- **Light and dark mode**, and a layout that works on phones.
 - **Your API key stays private:** the AI request runs in a Netlify Function, so the key never reaches the browser.
 
 ## Tech stack
@@ -19,7 +21,7 @@ An AI cooking assistant built with React. Tell it what's in your kitchen, or jus
 - [React 19](https://react.dev/) + [Vite](https://vite.dev/)
 - [Groq](https://console.groq.com) (free tier) running OpenAI gpt-oss-120b
 - [Netlify Functions](https://docs.netlify.com/functions/overview/) for the server-side API route
-- [react-markdown](https://github.com/remarkjs/react-markdown) to display the recipe
+- [Lucide](https://lucide.dev/) icons
 
 ## How it works
 
