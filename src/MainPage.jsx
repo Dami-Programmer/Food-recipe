@@ -140,7 +140,15 @@ export default function MainPage({ savedRecipes, setSavedRecipes, showSaved, set
         <h1>What are we cooking today?</h1>
         <p className="muted">Tell us what's in your kitchen, or name a dish.</p>
 
-        <div className="mode-switch" role="tablist" aria-label="How do you want to cook?">
+        <div
+          className="mode-switch"
+          role="tablist"
+          aria-label="How do you want to cook?"
+          data-mode={mode}
+        >
+          {/* The white pill behind the active option. It slides left/right
+              (see .mode-indicator in index.css) instead of jumping. */}
+          <span className="mode-indicator" aria-hidden="true" />
           <button
             role="tab"
             aria-selected={isIngredientsMode}

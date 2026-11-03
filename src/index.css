@@ -282,17 +282,38 @@ button:disabled {
   margin: 0 0 20px;
 }
 
+/* Two equal columns, so the sliding pill is always exactly half the width. */
 .mode-switch {
-  display: inline-flex;
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
   padding: 4px;
-  gap: 4px;
   border-radius: 999px;
   background: var(--surface-soft);
 }
 
+.mode-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Slide the pill over to the second option in "Describe a meal" mode. */
+.mode-switch[data-mode="dish"] .mode-indicator {
+  transform: translateX(100%);
+}
+
 .mode-switch button {
+  position: relative; /* sits above the sliding pill */
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   border: none;
   background: transparent;
@@ -300,12 +321,32 @@ button:disabled {
   padding: 8px 16px;
   font-size: 0.875rem;
   color: var(--ink-soft);
+  transition: color 0.3s ease;
 }
 
 .mode-switch button.is-active {
-  background: var(--surface);
   color: var(--ink);
-  box-shadow: 0 0 0 1px var(--line);
+}
+
+/* The ingredient chips fade and slide in when you switch back to them. */
+.ingredient-picker {
+  animation: fade-up 0.3s ease both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-indicator,
+  .mode-switch button,
+  .ingredient-picker {
+    transition: none;
+    animation: none;
+  }
 }
 
 .composer {
