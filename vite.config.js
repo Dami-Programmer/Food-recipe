@@ -30,10 +30,10 @@ function localRecipeApi() {
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load HUGGINGFACE_API_KEY from .env for the local function only.
+  // Load GROQ_API_KEY from .env for the local function only.
   // It has no VITE_ prefix, so Vite never puts it in the browser bundle.
   const env = loadEnv(mode, process.cwd(), '')
-  process.env.HUGGINGFACE_API_KEY ??= env.HUGGINGFACE_API_KEY
+  process.env.GROQ_API_KEY ??= env.GROQ_API_KEY
 
   return {
     plugins: [react(), localRecipeApi()],

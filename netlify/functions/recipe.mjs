@@ -1,10 +1,11 @@
-// Netlify Function that talks to Hugging Face on the server.
+// Netlify Function that talks to Groq (a free, fast AI API) on the server.
 // The API key only exists here (as an environment variable), so it never
 // ends up in the JavaScript that the browser downloads.
 // Netlify serves this file at /api/recipe (see `config` at the bottom).
-import { InferenceClient } from "@huggingface/inference";
 
-const MODEL = "deepseek-ai/DeepSeek-R1-0528:fastest";
+// Groq uses the same request format as OpenAI, so a plain fetch is enough.
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+const MODEL = "openai/gpt-oss-120b";
 
 // Only these regions are accepted, so the endpoint can't be used for anything else.
 // Keep this list in sync with REGIONS in src/constants.js.
@@ -53,7 +54,7 @@ function json(data, status = 200) {
   });
 }
 
-// DeepSeek-R1 "thinks out loud" inside <think>...</think> before answering.
+// Some models "think out loud" inside <think>...</think> before answering.
 // Remove that part so only the answer is left.
 function cleanReasoningOutput(text) {
   if (typeof text !== "string") return null;
@@ -145,7 +146,7 @@ export default async function handler(req) {
     return json({ error: "Method not allowed." }, 405);
   }
 
-  const apiKey = process.env.HUGGINGFACE_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return json({ error: "The recipe service isn't set up yet (missing API key)." }, 500);
   }
@@ -163,18 +164,43 @@ export default async function handler(req) {
   }
 
   try {
-    const client = new InferenceClient(apiKey);
-    const response = await client.chatCompletion({
-      model: MODEL,
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: userMessage },
-      ],
-      // R1 spends part of its budget "thinking", so 1024 often cut recipes off.
-      max_tokens: 4096,
+    const response = await fetch(GROQ_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: userMessage },
+        ],
+        // Asks Groq to reply with valid JSON only, which the recipe card needs.
+        response_format: { type: "json_object" },
+        // gpt-oss "thinks" before answering; low effort keeps recipes fast.
+        reasoning_effort: "low",
+        temperature: 0.6,
+        max_tokens: 3000,
+      }),
     });
 
-    const answer = cleanReasoningOutput(response.choices[0]?.message?.content);
+    if (!response.ok) {
+      // Log Groq's reason (e.g. rate limit) for debugging; users get a friendly message.
+      console.error(`Groq error ${response.status}: ${(await response.text()).slice(0, 300)}`);
+      const busy = response.status === 429;
+      return json(
+        {
+          error: busy
+            ? "Lots of people are cooking right now. Try again in a minute."
+            : "Couldn't reach the recipe service. Try again in a moment.",
+        },
+        502
+      );
+    }
+
+    const data = await response.json();
+    const answer = cleanReasoningOutput(data.choices?.[0]?.message?.content);
     const recipe = answer && parseRecipe(answer);
     if (!recipe) {
       return json({ error: "The recipe came back incomplete. Try again." }, 502);

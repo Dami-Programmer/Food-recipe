@@ -17,14 +17,14 @@ An AI cooking assistant built with React. Tell it what's in your kitchen, or jus
 ## Tech stack
 
 - [React 19](https://react.dev/) + [Vite](https://vite.dev/)
-- [Hugging Face Inference](https://huggingface.co/docs/inference-providers) running DeepSeek-R1
+- [Groq](https://console.groq.com) (free tier) running OpenAI gpt-oss-120b
 - [Netlify Functions](https://docs.netlify.com/functions/overview/) for the server-side API route
 - [react-markdown](https://github.com/remarkjs/react-markdown) to display the recipe
 
 ## How it works
 
 ```
-Browser (React)  ──POST /api/recipe──▶  Netlify Function  ──▶  Hugging Face (DeepSeek-R1)
+Browser (React)  ──POST /api/recipe──▶  Netlify Function  ──▶  Groq (gpt-oss-120b)
                  ◀──── recipe text ────  (holds the API key)
 ```
 
@@ -38,9 +38,9 @@ Browser (React)  ──POST /api/recipe──▶  Netlify Function  ──▶  H
    ```bash
    npm install
    ```
-2. Copy `.env.example` to `.env` and add your [Hugging Face token](https://huggingface.co/settings/tokens):
+2. Copy `.env.example` to `.env` and add your free [Groq API key](https://console.groq.com/keys):
    ```
-   HUGGINGFACE_API_KEY=your_hugging_face_token_here
+   GROQ_API_KEY=your_groq_api_key_here
    ```
 3. Start the dev server:
    ```bash
@@ -50,7 +50,7 @@ Browser (React)  ──POST /api/recipe──▶  Netlify Function  ──▶  H
 ## Deploy to Netlify
 
 1. Push the repo to GitHub and import it in Netlify. The build settings come from `netlify.toml`.
-2. In **Site configuration → Environment variables**, add `HUGGINGFACE_API_KEY`.
+2. In **Site configuration → Environment variables**, add `GROQ_API_KEY`.
 3. Deploy.
 
 ## What I learned
