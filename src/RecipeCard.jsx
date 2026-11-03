@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Check, Clock, Copy, Gauge, Heart, RefreshCw, Share2, Users } from "lucide-react";
+import { Check, Clock, Copy, ExternalLink, Gauge, Heart, RefreshCw, Share2, Users, Youtube } from "lucide-react";
+
+// Link to YouTube's search results for this dish. We don't ask the AI for a
+// video link because AI models often invent links to videos that don't exist.
+function youtubeSearchUrl(title, region) {
+  const query = `how to cook ${title} ${region.replace("/", " ")} recipe`;
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+}
 
 // Plain-text version of the recipe, used by Copy and Share.
 function recipeToText(recipe) {
@@ -121,6 +128,20 @@ export default function RecipeCard({ recipe, region, isSaved, onToggleSave, onAn
           </li>
         ))}
       </ol>
+
+      <a
+        className="youtube-link"
+        href={youtubeSearchUrl(recipe.title, region)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Youtube size={20} aria-hidden="true" />
+        <span>
+          <strong>Watch how it's made</strong>
+          <span className="muted">Cooking videos for {recipe.title} on YouTube</span>
+        </span>
+        <ExternalLink size={16} aria-hidden="true" className="youtube-link-arrow" />
+      </a>
 
       <div className="card-actions">
         <button className={`ghost-btn ${isSaved ? "is-active" : ""}`} onClick={onToggleSave}>

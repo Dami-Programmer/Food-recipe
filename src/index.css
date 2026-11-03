@@ -592,6 +592,52 @@ button.chip-selected:hover {
   color: var(--have-ink);
 }
 
+/* "Watch how it's made" link to YouTube search results */
+.youtube-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.youtube-link:hover {
+  border-color: #ff0000;
+}
+
+.youtube-link > svg:first-child {
+  flex-shrink: 0;
+  color: #ff0000; /* YouTube red */
+}
+
+.youtube-link > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.youtube-link strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.youtube-link .muted {
+  font-size: 0.8125rem;
+}
+
+.youtube-link-arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--ink-faint);
+}
+
 .card-actions {
   display: flex;
   flex-wrap: wrap;
