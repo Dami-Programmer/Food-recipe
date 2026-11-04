@@ -1,0 +1,5 @@
+# Let every search engine crawl the site
+User-agent: *
+Allow: /
+
+Sitemap: https://newtz-chef.netlify.app/sitemap.xml

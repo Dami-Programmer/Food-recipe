@@ -2,22 +2,76 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="newtz-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Search engines: the title and description Google shows in results -->
+    <title>Newtz Chef: AI Recipes from What's in Your Kitchen</title>
     <meta
       name="description"
-      content="Newtz Chef: get Nigerian, African and UK recipes from the ingredients you already have, or just describe the meal you want to cook."
+      content="Newtz Chef is a free AI cooking assistant. Add the ingredients you have, or name a dish, and get a step-by-step Nigerian, African or UK recipe in seconds."
     />
+    <link rel="canonical" href="https://newtz-chef.netlify.app/" />
+    <meta name="theme-color" content="#E4572E" />
+    <link rel="icon" type="image/png" href="newtz-icon.png" />
+    <link rel="apple-touch-icon" href="newtz-icon.png" />
+
+    <!-- Link previews (WhatsApp, Facebook, LinkedIn, iMessage, Slack...).
+         Image URLs must be absolute or most apps ignore them. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Newtz Chef" />
+    <meta property="og:url" content="https://newtz-chef.netlify.app/" />
+    <meta property="og:title" content="Newtz Chef: AI Recipes from What's in Your Kitchen" />
+    <meta
+      property="og:description"
+      content="Add the ingredients you have, or name a dish, and get a step-by-step Nigerian, African or UK recipe in seconds."
+    />
+    <meta property="og:image" content="https://newtz-chef.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Newtz Chef showing a Chicken Plantain Stew recipe card" />
+
+    <!-- Same preview for X (Twitter) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Newtz Chef: AI Recipes from What's in Your Kitchen" />
+    <meta
+      name="twitter:description"
+      content="Add the ingredients you have, or name a dish, and get a step-by-step Nigerian, African or UK recipe in seconds."
+    />
+    <meta name="twitter:image" content="https://newtz-chef.netlify.app/og-image.png" />
+
+    <!-- Tells Google this is a free web app called Newtz Chef -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Newtz Chef",
+        "alternateName": ["Newtz", "Newtz Chef Food Recipe"],
+        "url": "https://newtz-chef.netlify.app/",
+        "description": "A free AI cooking assistant that turns the ingredients you have into step-by-step Nigerian, African and UK recipes.",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Any",
+        "image": "https://newtz-chef.netlify.app/og-image.png",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:opsz,wght@14..32,400..600&display=swap"
       rel="stylesheet"
     />
-    <title>Newtz Chef | Food Recipe</title>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Shown to visitors and crawlers that don't run JavaScript -->
+    <noscript>
+      <h1>Newtz Chef</h1>
+      <p>
+        A free AI cooking assistant: add the ingredients you have, or name a dish, and get a
+        step-by-step Nigerian, African or UK recipe. Please turn on JavaScript to use it.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
